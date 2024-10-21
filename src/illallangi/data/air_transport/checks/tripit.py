@@ -49,6 +49,6 @@ def check_tripit_settings(
                 ),
             )
             for key in REQUIRED_KEYS
-            if key not in settings.TRIPIT
+            if key not in settings.TRIPIT or not settings.TRIPIT[key]
         ]
     return errors
