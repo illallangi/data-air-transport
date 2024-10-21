@@ -16,6 +16,7 @@ dependencies = [
     "django-timezone-field>=7.0",
     "django>=5.1.2",
     "djp",
+    "illallangi-data-aviation>=0.1.2",
     "illallangi-tripit>=0.6.0",
 ]
 keywords = [

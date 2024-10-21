@@ -311,6 +311,19 @@ wheels = [
 ]
 
 [[package]]
+name = "django-partial-date"
+version = "1.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4e/63/0d6198422a5b4a32f600bc595130817f9c8074d02c3b8d81202e1f3fdc35/django_partial_date-1.3.2.tar.gz", hash = "sha256:07bc97c04e7fbce8803f2a95723b508c726e466c175874985c5568b29f6ff893", size = 4742 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/c8/f0b5ac20a68c168e1ca5ac6755f7c2b96242992fcb2b2b63c2aadb5fa278/django_partial_date-1.3.2-py3-none-any.whl", hash = "sha256:8243ce1f9062e36d217a630c15a1436c419b3949799754f8cefb403b17d59fb4", size = 5450 },
+]
+
+[[package]]
 name = "django-sqids"
 version = "0.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -431,6 +444,15 @@ wheels = [
 ]
 
 [[package]]
+name = "html5lib-modern"
+version = "1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/af/6d/a773b5338f4341cdeca17d17cf0e56016ed1f9e7ea8377456b275b63a7b0/html5lib_modern-1.2.tar.gz", hash = "sha256:1fadbfc27ea955431270e4e79a4a4c290ba11c3a3098a95cc22dc73e312a1768", size = 275189 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b1/cd/ddf0baebab2dfac62a90af9d7a1c2504d697f1411f2529b928e02b4e9cd0/html5lib_modern-1.2-py2.py3-none-any.whl", hash = "sha256:3458b6e31525ede4fcaac0ff42d9eeb5efaf755473768103cb56e0275caa8d99", size = 116249 },
+]
+
+[[package]]
 name = "identify"
 version = "2.6.1"
 source = { registry = "https://pypi.org/simple" }
@@ -459,6 +481,7 @@ dependencies = [
     { name = "django-sqids" },
     { name = "django-timezone-field" },
     { name = "djp" },
+    { name = "illallangi-data-aviation" },
     { name = "illallangi-tripit" },
 ]
 
@@ -480,6 +503,7 @@ requires-dist = [
     { name = "django-sqids", specifier = ">=0.2.1" },
     { name = "django-timezone-field", specifier = ">=7.0" },
     { name = "djp", git = "https://github.com/andrewcole/djp" },
+    { name = "illallangi-data-aviation", specifier = ">=0.1.2" },
     { name = "illallangi-tripit", specifier = ">=0.6.0" },
 ]
 
@@ -491,6 +515,42 @@ dev = [
     { name = "hatchling", specifier = ">=1.25.0" },
     { name = "pre-commit", specifier = ">=3.8.0" },
     { name = "ruff", specifier = ">=0.6.9" },
+]
+
+[[package]]
+name = "illallangi-data-aviation"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "diffsync" },
+    { name = "django" },
+    { name = "django-autoslug" },
+    { name = "django-sqids" },
+    { name = "djp" },
+    { name = "illallangi-rdf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/15/1a/a10bc0ab798731625fda7df6fd92c173dc41507c565ab0da2b5c2eb0e262/illallangi_data_aviation-0.1.2.tar.gz", hash = "sha256:94159fabba8173932015d3936efe75a0ef35fc99fd7d740ca5ca86a76274303f", size = 3875977 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0a/f6/5ed5f0c9130e4efc4dcd011ab4451a9d77a98123fc52c94acbc7cd549625/illallangi_data_aviation-0.1.2-py3-none-any.whl", hash = "sha256:c5159f36a7f53f1160ab7256ecd280f54f9741668caf1efed8811426bcb91176", size = 3894253 },
+]
+
+[[package]]
+name = "illallangi-rdf"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "diffsync" },
+    { name = "django-partial-date" },
+    { name = "orjson" },
+    { name = "python-dotenv" },
+    { name = "rdflib" },
+    { name = "requests" },
+    { name = "tabulate" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/da/b3/416cb30fc3601a9ff4583bb327702c0ed7901816303ab1d0a7dc48bcbef3/illallangi_rdf-0.2.0.tar.gz", hash = "sha256:e4889eae03546c36fd83c64c68ebbcd62009d539e3ebc5cb4445b04412cf94f3", size = 7349 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/91/c60ea9ce3bfa29b55443c457fc2edeb4b0216819f79ace3ec169cdb04c06/illallangi_rdf-0.2.0-py3-none-any.whl", hash = "sha256:2656d5a34d58c6aabe92f73cf11daa936b00c84b29cf4875cb8c501587a3e412", size = 11879 },
 ]
 
 [[package]]
@@ -514,6 +574,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/31/74/7da2042c6261e5f88e9fb6820d9c864e1ff0b28de71a85f6eda68fa38b57/illallangi_tripit-0.6.0.tar.gz", hash = "sha256:407b921aa35c61dac0907b5eb0bba99e642a3f780473f2aefbf137230f4a72ac", size = 8792 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c9/38/01070373009b5b1f451f7e78038d44f1587bd0236aa8ae961a8d25c4dba8/illallangi_tripit-0.6.0-py3-none-any.whl", hash = "sha256:4cd9662adbf937aacd205906aaa32815228d0946d76c35076b6ee0de10052f77", size = 11094 },
+]
+
+[[package]]
+name = "isodate"
+version = "0.7.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/54/4d/e940025e2ce31a8ce1202635910747e5a87cc3a6a6bb2d00973375014749/isodate-0.7.2.tar.gz", hash = "sha256:4cd1aa0f43ca76f4a6c6c0292a85f40b35ec2e43e315b59f06e6d32171a953e6", size = 29705 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/aa/0aca39a37d3c7eb941ba736ede56d689e7be91cab5d9ca846bde3999eba6/isodate-0.7.2-py3-none-any.whl", hash = "sha256:28009937d8031054830160fce6d409ed342816b543597cece116d966c6d99e15", size = 22320 },
 ]
 
 [[package]]
@@ -988,6 +1057,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pyparsing"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/d5/e5aeee5387091148a19e1145f63606619cb5f20b83fccb63efae6474e7b2/pyparsing-3.2.0.tar.gz", hash = "sha256:cbf74e27246d595d9a74b186b810f6fbb86726dbf3b9532efb343f6d7294fe9c", size = 920984 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/be/ec/2eb3cd785efd67806c46c13a17339708ddc346cbb684eade7a6e6f79536a/pyparsing-3.2.0-py3-none-any.whl", hash = "sha256:93d9577b88da0bbea8cc8334ee8b918ed014968fd2ec383e868fb8afb1ccef84", size = 106921 },
+]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1050,6 +1128,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/84/d0/d73525aeba800df7030ac187d09c59dc40df1c878b4fab8669bdc805535d/questionary-2.0.1.tar.gz", hash = "sha256:bcce898bf3dbb446ff62830c86c5c6fb9a22a54146f0f5597d3da43b10d8fc8b", size = 24726 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0b/e7/2dd8f59d1d328773505f78b85405ddb1cfe74126425d076ce72e65540b8b/questionary-2.0.1-py3-none-any.whl", hash = "sha256:8ab9a01d0b91b68444dff7f6652c1e754105533f083cbe27597c8110ecc230a2", size = 34248 },
+]
+
+[[package]]
+name = "rdflib"
+version = "7.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "html5lib-modern" },
+    { name = "isodate", marker = "python_full_version < '3.11'" },
+    { name = "pyparsing" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8c/93/b91a99eb79da85bbbac0487ff28aeca4505d604484275d62b80ba269fd60/rdflib-7.1.0.tar.gz", hash = "sha256:a29a8fccebd3d3a5f1b7e88d92dace1c89829018c7d29a6114fff4449c188b3b", size = 4863439 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/50/206e30a1093289d6fe456c9491774004d9d84d7ed823ed9dd13a3e0caeee/rdflib-7.1.0-py3-none-any.whl", hash = "sha256:240c25c6e1b573ffa67aed23aae128e253c443c15291c9a01d8d392ea80c05b6", size = 562080 },
 ]
 
 [[package]]
