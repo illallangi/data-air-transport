@@ -1,3 +1,9 @@
+## v0.1.4 (2024-10-21)
+
+### Fix
+
+- **illallangi-data-aviation**: added reference
+
 ## v0.1.3 (2024-10-21)
 
 ### Fix
