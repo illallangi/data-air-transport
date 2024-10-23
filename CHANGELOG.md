@@ -1,3 +1,14 @@
+## v0.2.0 (2024-10-23)
+
+### Feat
+
+- **flight_html**: added primary_color to boarding pass
+
+### Fix
+
+- **illallangi-data-aviation**: upgraded to 0.2.0
+- **flights_html**: removed boarding pass view
+
 ## v0.1.4 (2024-10-21)
 
 ### Fix
