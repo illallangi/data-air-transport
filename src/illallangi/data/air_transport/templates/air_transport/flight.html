@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
+{% block style %}
+    {# djlint:off #}
+<style>
+    .airline-{{ obj.airline.iata.lower }}
+    
+    .bp-edging {
+        background-color: {{ obj.airline.dominant_color }};
+    }
+</style>
+    {# djlint:on #}
+{% endblock style %}
 {% block content %}
     <h2>{{ obj }}</h2>
     {% if obj.description %}
@@ -61,7 +72,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="bp-ticket_grid">
+    <div class="bp-ticket_grid airline-{{ obj.airline.iata.lower }}">
         <!-- box names are the first upper left cell for each segment-->
         <div class="bp-box bp-left bp-edging"></div>
         <div class="bp-box bp-left bp-b1">SEQ No</div>
