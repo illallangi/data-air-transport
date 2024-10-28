@@ -492,7 +492,7 @@ requires-dist = [
     { name = "django-autoslug", specifier = ">=1.9.9" },
     { name = "django-timezone-field", specifier = ">=7.0" },
     { name = "djp", git = "https://github.com/andrewcole/djp" },
-    { name = "illallangi-data-aviation", editable = "../data-aviation" },
+    { name = "illallangi-data-aviation", specifier = ">=0.4.0" },
     { name = "illallangi-tripit", specifier = ">=0.7.0" },
 ]
 
@@ -508,8 +508,8 @@ dev = [
 
 [[package]]
 name = "illallangi-data-aviation"
-version = "0.3.0"
-source = { editable = "../data-aviation" }
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "diffsync" },
     { name = "django" },
@@ -518,25 +518,9 @@ dependencies = [
     { name = "djp" },
     { name = "illallangi-rdf" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "diffsync", specifier = ">=2.0.0" },
-    { name = "django", specifier = ">=5.1.2" },
-    { name = "django-autoslug", specifier = ">=1.9.9" },
-    { name = "django-colorfield", specifier = ">=0.11.0" },
-    { name = "djp", git = "https://github.com/andrewcole/djp" },
-    { name = "illallangi-rdf", specifier = ">=0.4.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "commitizen", specifier = ">=3.29.1" },
-    { name = "deptry", specifier = ">=0.20.0" },
-    { name = "djlint", specifier = ">=1.35.2" },
-    { name = "hatchling", specifier = ">=1.25.0" },
-    { name = "pre-commit", specifier = ">=3.8.0" },
-    { name = "ruff", specifier = ">=0.6.9" },
+sdist = { url = "https://files.pythonhosted.org/packages/41/09/27ac2203007f8cdef94f98a4b66d53210e617be5a12328ad4cc492b4302c/illallangi_data_aviation-0.4.0.tar.gz", hash = "sha256:bb0b65c1a94b5e882973dd2491250d73700a0051e27982f6d6d0ffc945072773", size = 3876851 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/52/46/d64b55349ddd26aa3b8095da4b572cc8ca8c934cbda23891f1eefa4373c5/illallangi_data_aviation-0.4.0-py3-none-any.whl", hash = "sha256:28182c432e0cb96b617a31652e29f8a1c3ca1bcf1bc92ab9146838c7b4a1b4bd", size = 3894698 },
 ]
 
 [[package]]

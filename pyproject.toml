@@ -15,7 +15,7 @@ dependencies = [
     "django-timezone-field>=7.0",
     "django>=5.1.2",
     "djp",
-    "illallangi-data-aviation",
+    "illallangi-data-aviation>=0.4.0",
     "illallangi-tripit>=0.7.0",
 ]
 keywords = [
@@ -81,7 +81,6 @@ dev-dependencies = [
 
 [tool.uv.sources]
 djp = { git = "https://github.com/andrewcole/djp" }
-illallangi-data-aviation = { path = "../data-aviation", editable = true }
 [tool.hatch.build.targets.sdist]
 exclude = [
     "Makefile",
