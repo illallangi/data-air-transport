@@ -3,12 +3,11 @@
 {% block style %}
     {# djlint:off #}
 <style>
-    .airline-{{ obj.airline.iata.lower }}
-    
-    .bp-edging {
+    .airline-{{ obj.airline.iata.lower }} .bp-edging {
         background-color: {{ obj.airline.dominant_color }};
     }
 </style>
+<link rel="stylesheet" href="{% static 'air_transport/flight.css' %}" />
     {# djlint:on #}
 {% endblock style %}
 {% block content %}
@@ -18,18 +17,15 @@
             <em>{{ obj.description }}</em>
         </p>
     {% endif %}
+    {% if obj.get_logo_url %}
+        <div class="text-center">
+            <img src="{{ obj.get_logo_url }}"
+                 alt="{{ obj }}"
+                 class="img-fluid airline-logo">
+        </div>
+    {% endif %}
     <table class="table table-hover table-sm">
         <tbody>
-            <tr {% if obj.airline %}role="button" data-href="{{ obj.airline.get_absolute_url }}"{% endif %}>
-                <th scope="row">Carrier</th>
-                <td>
-                    {% if obj.airline %}
-                        {{ obj.airline }}
-                    {% else %}
-                        <em>Unknown</em>
-                    {% endif %}
-                </td>
-            </tr>
             <tr>
                 <th scope="row">Departure</th>
                 <td>
@@ -50,7 +46,17 @@
                     {% endif %}
                 </td>
             </tr>
-            <tr {% if obj.origin %}role="button" data-href="{{ obj.origin.get_absolute_url }}"{% endif %}>
+            <tr {% if obj.airline %}role="button" data-href="{% url 'airline_detail' obj.airline.slug %}"{% endif %}>
+                <th scope="row">Carrier</th>
+                <td>
+                    {% if obj.airline %}
+                        {{ obj.airline }}
+                    {% else %}
+                        <em>Unknown</em>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr {% if obj.origin %}role="button" data-href="{% url 'airport_detail' obj.origin.slug %}"{% endif %}>
                 <th scope="row">Origin</th>
                 <td>
                     {% if obj.origin %}
@@ -60,7 +66,7 @@
                     {% endif %}
                 </td>
             </tr>
-            <tr {% if obj.destination %}role="button" data-href="{{ obj.destination.get_absolute_url }}"{% endif %}>
+            <tr {% if obj.destination %}role="button" data-href="{% url 'airport_detail' obj.destination.slug %}"{% endif %}>
                 <th scope="row">Destination</th>
                 <td>
                     {% if obj.destination %}
@@ -70,6 +76,22 @@
                     {% endif %}
                 </td>
             </tr>
+            <tr {% if obj.trip %}role="button" data-href="{% url 'trip_detail' obj.trip.start.year obj.trip.start.month|stringformat:'02d' obj.trip.start.day|stringformat:'02d' obj.trip.slug %}"{% endif %}>
+                <th scope="row">Trip</th>
+                <td>
+                    {% if obj.trip %}
+                        {{ obj.trip }}
+                    {% else %}
+                        <em>Unknown</em>
+                    {% endif %}
+                </td>
+            </tr>
+            {% for related in related_objects %}
+                <tr role="button" data-href="{{ related.href }}">
+                    <th scope="row">{{ related.title }}</th>
+                    <td>{{ related.count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <div class="bp-ticket_grid airline-{{ obj.airline.iata.lower }}">

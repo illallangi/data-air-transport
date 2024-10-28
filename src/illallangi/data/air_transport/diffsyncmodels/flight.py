@@ -1,8 +1,9 @@
-from datetime import datetime
+from datetime import date, datetime
 
 import diffsync
 
-from illallangi.data.air_transport.models import Flight as ModelFlight
+from illallangi.data.air_transport.models import Flight as DjangoFlight
+from illallangi.data.air_transport.models import Trip
 from illallangi.data.aviation.models import Airline, Airport
 
 
@@ -15,20 +16,24 @@ class Flight(
         "flight_number",
     )
     _attributes = (
-        "airline",
-        "arrival",
+        "airline__iata",
         "arrival_timezone",
+        "arrival",
         "departure_timezone",
-        "destination",
+        "destination__iata",
         "destination_city",
+        "destination_gate",
         "destination_terminal",
         "flight_class",
-        "origin",
+        "origin__iata",
         "origin_city",
+        "origin_gate",
         "origin_terminal",
-        "sequence_number",
-        "seat",
         "passenger",
+        "seat",
+        "sequence_number",
+        "trip__name",
+        "trip__start",
     )
 
     pk: int
@@ -36,22 +41,24 @@ class Flight(
     departure: datetime
     flight_number: str
 
-    airline: str
+    airline__iata: str
     arrival_timezone: str
     arrival: datetime
     departure_timezone: str
+    destination__iata: str
     destination_city: str
-    destination_gate: str
-    destination_terminal: str
-    destination: str
-    flight_class: str
+    destination_gate: str | None
+    destination_terminal: str | None
+    flight_class: str | None
+    origin__iata: str
     origin_city: str
-    origin_gate: str
-    origin_terminal: str
-    origin: str
-    passenger: str
-    seat: str
+    origin_gate: str | None
+    origin_terminal: str | None
+    passenger: str | None
+    seat: str | None
     sequence_number: str
+    trip__name: str
+    trip__start: date
 
     @classmethod
     def create(
@@ -60,33 +67,40 @@ class Flight(
         ids: dict,
         attrs: dict,
     ) -> "Flight":
-        destination_airport = Airport.objects.get_or_create(iata=attrs["destination"])[
-            0
-        ]
-        origin_airport = Airport.objects.get_or_create(iata=attrs["origin"])[0]
+        airline = Airline.objects.get_or_create(
+            iata=attrs["airline__iata"],
+        )[0]
 
-        airline = Airline.objects.get_or_create(iata=attrs["airline"])[0]
+        destination = Airport.objects.get_or_create(iata=attrs["destination__iata"])[0]
 
-        obj = ModelFlight.objects.update_or_create(
-            departure=ids["departure"],
-            flight_number=ids["flight_number"],
+        origin = Airport.objects.get_or_create(
+            iata=attrs["origin__iata"],
+        )[0]
+
+        trip = Trip.objects.get_or_create(
+            name=attrs["trip__name"],
+            start=attrs["trip__start"],
+        )[0]
+
+        obj = DjangoFlight.objects.update_or_create(
+            **ids,
             defaults={
+                **{
+                    k: v
+                    for k, v in attrs.items()
+                    if k
+                    not in [
+                        "airline__iata",
+                        "destination__iata",
+                        "origin__iata",
+                        "trip__name",
+                        "trip__start",
+                    ]
+                },
                 "airline": airline,
-                "arrival_timezone": attrs["arrival_timezone"],
-                "arrival": attrs["arrival"],
-                "departure_timezone": attrs["departure_timezone"],
-                "destination_city": attrs["destination_city"],
-                "destination_gate": attrs["destination_gate"],
-                "destination_terminal": attrs["destination_terminal"],
-                "destination": destination_airport,
-                "flight_class": attrs["flight_class"],
-                "origin_city": attrs["origin_city"],
-                "origin_gate": attrs["origin_gate"],
-                "origin_terminal": attrs["origin_terminal"],
-                "origin": origin_airport,
-                "passenger": attrs["passenger"],
-                "seat": attrs["seat"],
-                "sequence_number": attrs["sequence_number"],
+                "destination": destination,
+                "origin": origin,
+                "trip": trip,
             },
         )[0]
 
@@ -103,21 +117,41 @@ class Flight(
         self,
         attrs: dict,
     ) -> "Flight":
-        destination_airport = Airport.objects.get_or_create(iata=attrs["destination"])[
-            0
-        ]
-        origin_airport = Airport.objects.get_or_create(iata=attrs["origin"])[0]
+        airline = Airline.objects.get_or_create(
+            iata=attrs["airline__iata"],
+        )[0]
 
-        airline = Airline.objects.get_or_create(iata=attrs["airline"])[0]
+        destination = Airport.objects.get_or_create(iata=attrs["destination__iata"])[0]
 
-        ModelFlight.objects.filter(
+        origin = Airport.objects.get_or_create(
+            iata=attrs["origin__iata"],
+        )[0]
+
+        trip = Trip.objects.get_or_create(
+            name=attrs["trip__name"],
+            start=attrs["trip__start"],
+        )[0]
+
+        DjangoFlight.objects.get(
             pk=self.pk,
         ).update(
             **{
-                **attrs,
+                **{
+                    k: v
+                    for k, v in attrs.items()
+                    if k
+                    not in [
+                        "airline__iata",
+                        "destination__iata",
+                        "origin__iata",
+                        "trip__name",
+                        "trip__start",
+                    ]
+                },
                 "airline": airline,
-                "destination": destination_airport,
-                "origin": origin_airport,
+                "destination": destination,
+                "origin": origin,
+                "trip": trip,
             },
         )
 
@@ -126,7 +160,7 @@ class Flight(
     def delete(
         self,
     ) -> "Flight":
-        ModelFlight.objects.get(
+        DjangoFlight.objects.get(
             pk=self.pk,
         ).delete()
 

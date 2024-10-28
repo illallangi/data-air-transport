@@ -1,7 +1,5 @@
 from autoslug import AutoSlugField
 from django.db import models
-from django.urls import reverse
-from django_sqids import SqidsField
 
 
 class Trip(
@@ -22,27 +20,31 @@ class Trip(
         ),
     )
 
-    sqid = SqidsField(
-        real_field_name="id",
-        min_length=6,
-    )
-
     # Natural Keys
 
-    start = models.DateField(
+    name = models.CharField(
+        blank=False,
+        max_length=64,
         null=False,
     )
 
-    name = models.CharField(
+    start = models.DateField(
+        blank=False,
         null=False,
-        max_length=64,
     )
 
     # Fields
 
     end = models.DateField(
-        null=False,
+        blank=True,
         max_length=25,
+        null=True,
+    )
+
+    open_location_code = models.CharField(  # noqa: DJ001
+        blank=True,
+        max_length=25,
+        null=True,
     )
 
     # Classes
@@ -57,19 +59,6 @@ class Trip(
     ) -> str:
         return self.name
 
-    def get_absolute_url(
-        self,
-    ) -> str:
-        return reverse(
-            "trip_html",
-            kwargs={
-                "trip_slug": str(self.slug),
-                "trip_year": str(self.start.year).zfill(4),
-                "trip_month": str(self.start.month).zfill(2),
-                "trip_day": str(self.start.day).zfill(2),
-            },
-        )
-
     @property
     def description(
         self,
@@ -80,3 +69,13 @@ class Trip(
         self,
     ) -> str:
         return self.name
+
+    def get_key(
+        self,
+    ) -> dict[str, str]:
+        return {
+            "trip_slug": str(self.slug),
+            "trip_year": str(self.start.year).zfill(4),
+            "trip_month": str(self.start.month).zfill(2),
+            "trip_day": str(self.start.day).zfill(2),
+        }

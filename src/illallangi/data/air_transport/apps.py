@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings
-from django.db.models.signals import post_migrate
 
+from illallangi.django.data.signals import ready_for_models
 from illallangi.tripit.adapters import AirTransportAdapter as TripItAdapter
 
 
@@ -10,25 +10,26 @@ def add_model(
 ) -> None:
     from illallangi.django.data.models import Model, Synchronize
 
-    Model.objects.update_or_create(
+    Model.objects.create(
         description="Every leg of a journey, no matter how long or short, brings you closer to your destination.",
         icon="air_transport/flights.jpg",
         model="illallangi.data.air_transport.models.Flight",
         plural="Flights",
         singular="Flight",
-        url="flights_html",
+        url="flight_list",
     )
-    Model.objects.update_or_create(
+    Model.objects.create(
         description="Each trip is a step towards discovering new horizons, embracing diverse cultures, and enriching your soul.",
         icon="air_transport/trips.jpg",
         model="illallangi.data.air_transport.models.Trip",
         plural="Trips",
         singular="Trip",
-        url="trips_html",
+        url="trip_list",
     )
 
-    Synchronize.objects.update_or_create(
+    Synchronize.objects.create(
         callable="illallangi.data.air_transport.apps.synchronize",
+        before=["illallangi.data.aviation.apps.synchronize"],
     )
 
 
@@ -39,9 +40,8 @@ class AirTransportConfig(AppConfig):
     def ready(
         self,
     ) -> None:
-        post_migrate.connect(
+        ready_for_models.connect(
             add_model,
-            sender=self,
         )
 
 

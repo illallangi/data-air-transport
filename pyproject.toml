@@ -12,12 +12,11 @@ requires-python = ">=3.10.1"
 dependencies = [
     "diffsync>=2.0.0",
     "django-autoslug>=1.9.9",
-    "django-sqids>=0.2.1",
     "django-timezone-field>=7.0",
     "django>=5.1.2",
     "djp",
-    "illallangi-data-aviation>=0.2.0",
-    "illallangi-tripit>=0.6.0",
+    "illallangi-data-aviation",
+    "illallangi-tripit>=0.7.0",
 ]
 keywords = [
     "django",
@@ -45,6 +44,8 @@ requires = [
 build-backend = "hatchling.build"
 [tool.deptry.per_rule_ignores]
 DEP002 = [
+    "illallangi-data-aviation",
+    "illallangi-tripit",
 ]
 [tool.djlint]
 profile="django"
@@ -54,9 +55,10 @@ ignore="H006"
 [tool.ruff]
 lint.select = ["ALL"]
 lint.ignore = [
-    "D",
     "COM812",
+    "D",
     "E501",
+    "ERA001",
     "ISC001",
 ]
 exclude = [
@@ -79,6 +81,7 @@ dev-dependencies = [
 
 [tool.uv.sources]
 djp = { git = "https://github.com/andrewcole/djp" }
+illallangi-data-aviation = { path = "../data-aviation", editable = true }
 [tool.hatch.build.targets.sdist]
 exclude = [
     "Makefile",

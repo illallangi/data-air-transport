@@ -2,7 +2,7 @@ from datetime import datetime
 
 import diffsync
 
-from illallangi.data.air_transport.models import Trip as ModelTrip
+from illallangi.data.air_transport.models import Trip as DjangoTrip
 
 
 class Trip(
@@ -10,17 +10,21 @@ class Trip(
 ):
     _modelname = "Trip"
     _identifiers = (
-        "start",
         "name",
+        "start",
     )
-    _attributes = ("end",)
+    _attributes = (
+        "end",
+        "open_location_code",
+    )
 
     pk: int
 
-    start: datetime
     name: str
+    start: datetime
 
-    end: datetime
+    end: datetime | None
+    open_location_code: str | None
 
     @classmethod
     def create(
@@ -29,12 +33,9 @@ class Trip(
         ids: dict,
         attrs: dict,
     ) -> "Trip":
-        obj = ModelTrip.objects.update_or_create(
-            start=ids["start"],
-            name=ids["name"],
-            defaults={
-                "end": attrs["end"],
-            },
+        obj = DjangoTrip.objects.update_or_create(
+            **ids,
+            defaults=attrs,
         )[0]
 
         return super().create(
@@ -50,7 +51,7 @@ class Trip(
         self,
         attrs: dict,
     ) -> "Trip":
-        ModelTrip.objects.filter(
+        DjangoTrip.objects.filter(
             pk=self.pk,
         ).update(
             **attrs,
@@ -61,7 +62,7 @@ class Trip(
     def delete(
         self,
     ) -> "Trip":
-        ModelTrip.objects.get(
+        DjangoTrip.objects.get(
             pk=self.pk,
         ).delete()
 

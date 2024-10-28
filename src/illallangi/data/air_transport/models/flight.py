@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 
 from autoslug import AutoSlugField
 from django.db import models
-from django.urls import reverse
-from django_sqids import SqidsField
 from timezone_field import TimeZoneField
 
 from illallangi.data.aviation.models import Airline, Airport
@@ -27,109 +25,133 @@ class Flight(
         ),
     )
 
-    sqid = SqidsField(
-        real_field_name="id",
-        min_length=6,
-    )
-
     # Natural Keys
 
     departure = models.DateTimeField(
+        blank=False,
         null=False,
     )
 
     flight_number = models.CharField(
-        null=False,
+        blank=False,
         max_length=6,
+        null=False,
     )
 
     # Fields
 
     airline = models.ForeignKey(
-        to=Airline,
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name="flights",
-    )
-
-    arrival = models.DateTimeField(
-        null=False,
-        max_length=25,
+        to=Airline,
     )
 
     arrival_timezone = TimeZoneField(
+        blank=False,
+        null=False,
+    )
+
+    arrival = models.DateTimeField(
+        blank=False,
+        max_length=25,
         null=False,
     )
 
     departure_timezone = TimeZoneField(
+        blank=False,
         null=False,
     )
 
     destination = models.ForeignKey(
-        to=Airport,
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name="destination_flights",
+        to=Airport,
     )
 
     destination_city = models.CharField(
-        null=False,
+        blank=False,
         max_length=255,
+        null=False,
     )
 
-    passenger = models.CharField(
-        null=False,
+    destination_gate = models.CharField(  # noqa: DJ001
+        blank=True,
         max_length=255,
+        null=True,
     )
 
-    destination_terminal = models.CharField(
-        null=False,
+    destination_terminal = models.CharField(  # noqa: DJ001
+        blank=True,
         max_length=255,
+        null=True,
     )
 
-    destination_gate = models.CharField(
-        null=False,
+    flight_class = models.CharField(  # noqa: DJ001
+        blank=True,
         max_length=255,
-    )
-
-    flight_class = models.CharField(
-        null=False,
-        max_length=255,
+        null=True,
     )
 
     origin = models.ForeignKey(
-        to=Airport,
+        blank=False,
+        null=False,
         on_delete=models.CASCADE,
         related_name="originating_flights",
+        to=Airport,
     )
 
     origin_city = models.CharField(
-        null=False,
+        blank=False,
         max_length=255,
+        null=False,
     )
 
-    origin_gate = models.CharField(
-        null=False,
+    origin_gate = models.CharField(  # noqa: DJ001
+        blank=True,
         max_length=255,
+        null=True,
     )
 
-    origin_terminal = models.CharField(
-        null=False,
+    origin_terminal = models.CharField(  # noqa: DJ001
+        blank=True,
         max_length=255,
+        null=True,
+    )
+
+    passenger = models.CharField(  # noqa: DJ001
+        blank=True,
+        max_length=255,
+        null=True,
+    )
+
+    seat = models.CharField(  # noqa: DJ001
+        blank=True,
+        max_length=3,
+        null=True,
     )
 
     sequence_number = models.CharField(
-        null=False,
+        blank=False,
         max_length=3,
+        null=False,
     )
 
-    seat = models.CharField(
+    trip = models.ForeignKey(
+        blank=False,
         null=False,
-        max_length=3,
+        on_delete=models.CASCADE,
+        related_name="flights",
+        to="Trip",
     )
 
     # Classes
 
     class Meta:
-        unique_together = ("departure", "slug")
+        unique_together = ("departure", "flight_number")
 
     # Methods
 
@@ -137,19 +159,6 @@ class Flight(
         self,
     ) -> str:
         return self.flight_number
-
-    def get_absolute_url(
-        self,
-    ) -> str:
-        return reverse(
-            "flight_html",
-            kwargs={
-                "flight_slug": str(self.slug),
-                "flight_year": str(self.departure.year).zfill(4),
-                "flight_month": str(self.departure.month).zfill(2),
-                "flight_day": str(self.departure.day).zfill(2),
-            },
-        )
 
     @property
     def description(

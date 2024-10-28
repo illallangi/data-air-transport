@@ -161,7 +161,8 @@ body {
   text-transform: uppercase;
   font-weight: 500;
   font-size: 1.4em;
-  /* overflow: hidden; */
+  text-wrap: nowrap;
+  overflow: hidden;
 }
 
 .bp-j2 {
@@ -185,7 +186,8 @@ body {
   text-transform: uppercase;
   font-weight: 500;
   font-size: 1.4em;
-  /* overflow: hidden; */
+  text-wrap: nowrap;
+  overflow: hidden;
 }
 
 .bp-j4 {
