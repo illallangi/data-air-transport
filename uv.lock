@@ -493,7 +493,7 @@ requires-dist = [
     { name = "django-timezone-field", specifier = ">=7.0" },
     { name = "djp", git = "https://github.com/andrewcole/djp" },
     { name = "illallangi-data-aviation", specifier = ">=0.4.0" },
-    { name = "illallangi-tripit", specifier = ">=0.7.0" },
+    { name = "illallangi-tripit", specifier = ">=0.8.0" },
 ]
 
 [package.metadata.requires-dev]

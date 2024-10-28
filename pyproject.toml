@@ -16,7 +16,7 @@ dependencies = [
     "django>=5.1.2",
     "djp",
     "illallangi-data-aviation>=0.4.0",
-    "illallangi-tripit>=0.7.0",
+    "illallangi-tripit>=0.8.0",
 ]
 keywords = [
     "django",
