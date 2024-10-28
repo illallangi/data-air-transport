@@ -1,3 +1,9 @@
+## v0.4.1 (2024-10-28)
+
+### Fix
+
+- **data-air-transport**: updated to v0.8.0
+
 ## v0.4.0 (2024-10-28)
 
 ### Feat
